@@ -10,11 +10,23 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.fooddeliveryapp.entities.AppDatabase
 import com.example.fooddeliveryapp.ui.theme.FoodDeliveryAppTheme
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import android.util.Log
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val db = AppDatabase.getInstance(this)
+        lifecycleScope.launch(Dispatchers.IO) {
+            val users = db.userDao().getAll()
+            Log.d("DB", "Users count = ${users.size}")
+        }
+
         setContent {
             FoodDeliveryAppTheme {
                 Surface(
