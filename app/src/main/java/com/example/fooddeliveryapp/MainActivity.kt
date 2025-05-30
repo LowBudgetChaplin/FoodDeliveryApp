@@ -1,57 +1,63 @@
 package com.example.fooddeliveryapp
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.fooddeliveryapp.entities.AppDatabase
-import com.example.fooddeliveryapp.ui.theme.FoodDeliveryAppTheme
+import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.fooddeliveryapp.databinding.ActivityMainBinding
+import com.example.fooddeliveryapp.entities.AppDatabase
+import com.example.fooddeliveryapp.layouts.CurrentOrderActivity
+import com.example.fooddeliveryapp.layouts.OrderHistoryActivity
+import com.example.fooddeliveryapp.utils.RestaurantAdapter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import android.util.Log
+import kotlinx.coroutines.withContext
 
-class MainActivity : ComponentActivity() {
+class MainActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityMainBinding
+    private lateinit var adapter: RestaurantAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        adapter = RestaurantAdapter { product ->
+            Log.d("MainActivity", "Clicked restaurant: ${product.name}")
+        }
+        binding.rvRestaurants.layoutManager = LinearLayoutManager(this)
+        binding.rvRestaurants.adapter = adapter
+
         val db = AppDatabase.getInstance(this)
-        lifecycleScope.launch(Dispatchers.IO) {
-            val users = db.userDao().getAll()
-            Log.d("DB", "Users count = ${users.size}")
-        }
-
-        setContent {
-            FoodDeliveryAppTheme {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    Greeting("Android")
-                }
+        lifecycleScope.launch {
+            val list = withContext(Dispatchers.IO) {
+                db.productDao().getAll()
             }
+            adapter.submitList(list)
+            Log.d("MainActivity", "Loaded ${list.size} restaurants")
         }
-    }
-}
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
+        binding.searchRestaurants.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                return false
+            }
+            override fun onQueryTextChange(newText: String): Boolean {
+                adapter.filter.filter(newText)
+                return true
+            }
+        })
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    FoodDeliveryAppTheme {
-        Greeting("Android")
+        binding.btnTrackDelivery.setOnClickListener {
+            startActivity(Intent(this, CurrentOrderActivity::class.java))
+        }
+        binding.btnOrderHistory.setOnClickListener {
+            startActivity(Intent(this, OrderHistoryActivity::class.java))
+        }
+        binding.btnCurrentCart.setOnClickListener {}
     }
 }

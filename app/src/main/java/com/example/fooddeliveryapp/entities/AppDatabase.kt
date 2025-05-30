@@ -5,11 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.example.fooddeliveryapp.dao.CartDao
-import com.example.fooddeliveryapp.dao.DeliveryDao
-import com.example.fooddeliveryapp.dao.OrderDao
-import com.example.fooddeliveryapp.dao.ProductDao
-import com.example.fooddeliveryapp.dao.UserDao
+import com.example.fooddeliveryapp.dao.*
 import com.example.fooddeliveryapp.utils.Converters
 import com.example.fooddeliveryapp.entities.model.*
 
@@ -35,12 +31,11 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun deliveryDao(): DeliveryDao
 
     companion object {
-        @Volatile
-        private var INSTANCE: AppDatabase? = null
+        @Volatile private var INSTANCE: AppDatabase? = null
 
         fun getInstance(context: Context): AppDatabase =
             INSTANCE ?: synchronized(this) {
-                INSTANCE ?: Room.databaseBuilder(
+                Room.databaseBuilder(
                     context.applicationContext,
                     AppDatabase::class.java,
                     "food_delivery.db"
