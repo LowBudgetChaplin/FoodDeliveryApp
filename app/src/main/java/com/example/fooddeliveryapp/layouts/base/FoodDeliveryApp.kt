@@ -1,4 +1,4 @@
-package com.example.fooddeliveryapp.base
+package com.example.fooddeliveryapp.layouts.base
 
 import android.app.Application
 import androidx.room.Room

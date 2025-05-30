@@ -1,4 +1,4 @@
-package com.example.fooddeliveryapp.dao
+package com.example.fooddeliveryapp.entities.dao
 
 import androidx.room.*
 import com.example.fooddeliveryapp.entities.model.DeliveryLocationEntity
