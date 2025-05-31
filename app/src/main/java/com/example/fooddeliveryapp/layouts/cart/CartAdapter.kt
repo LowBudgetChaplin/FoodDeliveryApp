@@ -7,15 +7,17 @@ import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fooddeliveryapp.R
 import com.example.fooddeliveryapp.entities.model.CartItemEntity
+import com.example.fooddeliveryapp.entities.model.CartItemWithProduct
+
 
 class CartAdapter(
     private val onDeleteClick: (CartItemEntity) -> Unit,
     private val onQuantityChange: (CartItemEntity, Int) -> Unit
 ) : RecyclerView.Adapter<CartAdapter.CartViewHolder>() {
 
-    private var cartItems: MutableList<CartItemEntity> = mutableListOf()
+    private var cartItems: MutableList<CartItemWithProduct> = mutableListOf()
 
-    fun submitList(items: List<CartItemEntity>) {
+    fun submitList(items: List<CartItemWithProduct>) {
         cartItems = items.toMutableList()
         notifyDataSetChanged()
     }
@@ -29,39 +31,41 @@ class CartAdapter(
     override fun getItemCount(): Int = cartItems.size
 
     override fun onBindViewHolder(holder: CartViewHolder, position: Int) {
-        val item = cartItems[position]
-        holder.bind(item)
+        val itemWithProduct = cartItems[position]
+        holder.bind(itemWithProduct)
     }
 
     inner class CartViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val tvProductId: TextView = itemView.findViewById(R.id.tv_product_id)
+        private val tvProductName: TextView = itemView.findViewById(R.id.tv_product_id)
         private val tvQuantity: TextView = itemView.findViewById(R.id.tv_quantity)
         private val btnIncrease: Button = itemView.findViewById(R.id.btn_increase)
         private val btnDecrease: Button = itemView.findViewById(R.id.btn_decrease)
         private val btnDelete: ImageButton = itemView.findViewById(R.id.btn_delete_item)
 
-        fun bind(item: CartItemEntity) {
-            tvProductId.text = "Produs: ${item.productId}"
-            tvQuantity.text = item.quantity.toString()
+        fun bind(itemWithProduct: CartItemWithProduct) {
+            tvProductName.text = "${itemWithProduct.productName}"
+            tvQuantity.text = itemWithProduct.cartItem.quantity.toString()
 
             btnIncrease.setOnClickListener {
-                item.quantity++
-                tvQuantity.text = item.quantity.toString()
-                onQuantityChange(item, item.quantity)
+                val cartItem = itemWithProduct.cartItem
+                cartItem.quantity++
+                tvQuantity.text = cartItem.quantity.toString()
+                onQuantityChange(cartItem, cartItem.quantity)
             }
 
             btnDecrease.setOnClickListener {
-                if (item.quantity > 1) {
-                    item.quantity--
-                    tvQuantity.text = item.quantity.toString()
-                    onQuantityChange(item, item.quantity)
+                val cartItem = itemWithProduct.cartItem
+                if (cartItem.quantity > 1) {
+                    cartItem.quantity--
+                    tvQuantity.text = cartItem.quantity.toString()
+                    onQuantityChange(cartItem, cartItem.quantity)
                 }
             }
 
             btnDelete.setOnClickListener {
                 val position = adapterPosition
                 if (position != RecyclerView.NO_POSITION) {
-                    onDeleteClick(item)
+                    onDeleteClick(itemWithProduct.cartItem)
                     cartItems.removeAt(position)
                     notifyItemRemoved(position)
                 }

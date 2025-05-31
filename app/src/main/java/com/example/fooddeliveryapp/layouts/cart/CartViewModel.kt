@@ -3,10 +3,13 @@ package com.example.fooddeliveryapp.layouts.cart
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.fooddeliveryapp.entities.model.CartItemEntity
+import com.example.fooddeliveryapp.entities.model.CartItemWithProduct
 import com.example.fooddeliveryapp.entities.model.OrderEntity
 import com.example.fooddeliveryapp.entities.model.OrderItemEntity
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import java.util.Date
@@ -15,6 +18,16 @@ class CartViewModel(private val cartRepository: CartRepository) : ViewModel() {
 
     val cartItems = cartRepository.cartItems
         .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
+
+    val cartItemsWithProductNames: Flow<List<CartItemWithProduct>> =
+        cartRepository.cartItems.map { cartList ->
+            cartList.mapNotNull { cartItem ->
+                val product = cartRepository.getProductById(cartItem.productId)
+                product?.let {
+                    CartItemWithProduct(cartItem, it.name)
+                }
+            }
+        }.stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
     fun addToCart(productId: Long) {
         viewModelScope.launch {
@@ -54,7 +67,7 @@ class CartViewModel(private val cartRepository: CartRepository) : ViewModel() {
                 val newOrder = OrderEntity(
                     userId = userId,
                     date = Date(),
-                    status = "NEW"
+                    status = "Comanda finalizata"
                 )
                 val orderId = cartRepository.insertOrder(newOrder)
 
