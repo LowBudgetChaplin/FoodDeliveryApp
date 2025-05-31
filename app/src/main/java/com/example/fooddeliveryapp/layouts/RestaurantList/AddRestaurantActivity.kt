@@ -8,6 +8,7 @@ import com.example.fooddeliveryapp.MainActivity
 import com.example.fooddeliveryapp.R
 import com.example.fooddeliveryapp.entities.AppDatabase
 import com.example.fooddeliveryapp.entities.dao.RestaurantDao
+import android.content.Context
 
 class AddRestaurantActivity : AppCompatActivity() {
 
@@ -24,6 +25,15 @@ class AddRestaurantActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_restaurant)
+
+        val prefs = getSharedPreferences("user_session", Context.MODE_PRIVATE)
+        val role = prefs.getString("role", "") ?: ""
+
+        if (role == "client") {
+            Toast.makeText(this, "Acces interzis pentru clienti", Toast.LENGTH_SHORT).show()
+            finish()
+            return
+        }
 
         restaurantDao = AppDatabase.getInstance(this).restaurantDao()
         nameEditText = findViewById(R.id.etRestaurantName)
@@ -58,7 +68,7 @@ class AddRestaurantActivity : AppCompatActivity() {
 
         btnGoToMain.setOnClickListener {
             startActivity(Intent(this, MainActivity::class.java))
-            startActivity(intent)
+//            startActivity(intent)
             finish()
         }
     }

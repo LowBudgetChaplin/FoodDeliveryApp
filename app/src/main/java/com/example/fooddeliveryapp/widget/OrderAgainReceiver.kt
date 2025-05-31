@@ -69,7 +69,7 @@ class OrderAgainReceiver : BroadcastReceiver() {
                         appWidgetManager.updateAppWidget(appWidgetId, views)
                     }
 
-                    Toast.makeText(context, "Comanda a fost plasată din nou!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Comanda a fost plasata din nou!", Toast.LENGTH_SHORT).show()
 
                     val launchIntent = Intent(context, MainActivity::class.java).apply {
                         flags = Intent.FLAG_ACTIVITY_NEW_TASK
@@ -79,7 +79,7 @@ class OrderAgainReceiver : BroadcastReceiver() {
                 }
             } else {
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(context, "Nicio comandă anterioară!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Nicio comanda anterioara!", Toast.LENGTH_SHORT).show()
                 }
             }
         }
