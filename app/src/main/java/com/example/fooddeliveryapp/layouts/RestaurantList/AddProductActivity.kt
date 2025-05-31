@@ -22,6 +22,7 @@ class AddProductActivity : AppCompatActivity() {
     private lateinit var productDescEditText: EditText
     private lateinit var productPriceEditText: EditText
     private lateinit var productCategoryEditText: EditText
+    private lateinit var productImageUrlEditText: EditText
     private lateinit var btnAddProduct: Button
     private lateinit var btnFinish: Button
 
@@ -49,6 +50,7 @@ class AddProductActivity : AppCompatActivity() {
         productDescEditText = findViewById(R.id.etProductDescription)
         productPriceEditText = findViewById(R.id.etProductPrice)
         productCategoryEditText = findViewById(R.id.etProductCategory)
+        productImageUrlEditText = findViewById(R.id.etProductImageUrl)
         btnAddProduct = findViewById(R.id.btnAddProduct)
         btnFinish = findViewById(R.id.btnFinishRestaurant)
 
@@ -57,6 +59,7 @@ class AddProductActivity : AppCompatActivity() {
             val desc = productDescEditText.text.toString()
             val price = productPriceEditText.text.toString().toDoubleOrNull() ?: 0.0
             val category = productCategoryEditText.text.toString()
+            val productImageUrl = productImageUrlEditText.text.toString()
 
             if (name.isNotEmpty() && price > 0) {
                 val product = ProductEntity(
@@ -64,7 +67,7 @@ class AddProductActivity : AppCompatActivity() {
                     name = name,
                     description = desc,
                     price = price,
-                    imageUrl = null,
+                    imageUrl = productImageUrl,
                     category = category
                 )
                 products.add(product)
@@ -74,6 +77,7 @@ class AddProductActivity : AppCompatActivity() {
                 productDescEditText.text.clear()
                 productPriceEditText.text.clear()
                 productCategoryEditText.text.clear()
+                productImageUrlEditText.text.clear()
             } else {
                 Toast.makeText(this, "Completeaza corect campurile produsului", Toast.LENGTH_SHORT).show()
             }
