@@ -12,6 +12,7 @@ import com.example.fooddeliveryapp.entities.AppDatabase
 import com.example.fooddeliveryapp.layouts.CurrentOrderActivity
 import com.example.fooddeliveryapp.layouts.OrderHistoryActivity
 import com.example.fooddeliveryapp.layouts.ProductListActivity
+import com.example.fooddeliveryapp.layouts.cart.CartActivity
 import com.example.fooddeliveryapp.utils.RestaurantAdapter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -72,7 +73,11 @@ class MainActivity : AppCompatActivity() {
         binding.btnOrderHistory.setOnClickListener {
             startActivity(Intent(this, OrderHistoryActivity::class.java))
         }
-        binding.btnCurrentCart.setOnClickListener {}
+        binding.btnCurrentCart.setOnClickListener {
+            val intent = Intent(this, CartActivity::class.java)
+            startActivity(intent)
+        }
+
     }
 
 }

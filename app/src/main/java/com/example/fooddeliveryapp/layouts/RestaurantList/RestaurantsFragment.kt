@@ -25,14 +25,12 @@ class RestaurantsFragment : Fragment(R.layout.fragment_restaurant)
 
         adapter = RestaurantAdapter { restaurant ->
             Toast.makeText(requireContext(), "Clicked: ${restaurant.name}", Toast.LENGTH_SHORT).show()
-            // aici poți naviga la pagina cu produsele restaurantului
+
         }
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerViewRestaurants)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
-
-        // Inițializezi restaurantDao
         restaurantDao = AppDatabase.getInstance(requireContext()).restaurantDao()
 
         lifecycleScope.launch {

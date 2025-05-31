@@ -40,6 +40,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun cartDao(): CartDao
     abstract fun orderDao(): OrderDao
     abstract fun deliveryDao(): DeliveryDao
+    abstract fun orderItemDao(): OrderItemDao
 
     companion object {
         @Volatile private var INSTANCE: AppDatabase? = null

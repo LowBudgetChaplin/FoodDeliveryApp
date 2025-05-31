@@ -9,7 +9,9 @@ import com.bumptech.glide.Glide
 import com.example.fooddeliveryapp.databinding.ItemProductBinding
 import com.example.fooddeliveryapp.entities.model.ProductEntity
 
-class ProductAdapter : ListAdapter<ProductEntity, ProductAdapter.ViewHolder>(DiffCallback()) {
+class ProductAdapter(
+    private val onAddToCartClick: (ProductEntity) -> Unit
+) : ListAdapter<ProductEntity, ProductAdapter.ViewHolder>(DiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(
         ItemProductBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -30,6 +32,11 @@ class ProductAdapter : ListAdapter<ProductEntity, ProductAdapter.ViewHolder>(Dif
                 .placeholder(android.R.drawable.ic_menu_report_image)
                 .error(android.R.drawable.ic_menu_report_image)
                 .into(binding.ivProductImage)
+
+            // Click pe butonul Adaugă în coș
+            binding.btnAddToCart.setOnClickListener {
+                onAddToCartClick(product)
+            }
         }
     }
 
