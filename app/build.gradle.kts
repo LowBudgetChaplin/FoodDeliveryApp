@@ -78,6 +78,7 @@ dependencies {
     implementation("androidx.room:room-ktx:2.5.2")
     implementation("com.google.android.gms:play-services-maps:19.2.0")
     implementation("androidx.preference:preference-ktx:1.2.1")
+//    implementation("com.google.android.gms:play-services-ads-api:24.3.0")
     ksp("androidx.room:room-compiler:2.5.2")
     ksp("com.github.bumptech.glide:ksp:4.15.1")
     implementation("androidx.activity:activity-compose:1.7.0")

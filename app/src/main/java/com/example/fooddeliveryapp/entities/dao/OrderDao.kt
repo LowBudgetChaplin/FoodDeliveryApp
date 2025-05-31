@@ -37,4 +37,7 @@ interface OrderDao {
     FROM order_items 
     WHERE orderId = :orderId""")
     suspend fun getTotalForOrder(orderId: Long): Double?
+
+    @Query("SELECT * FROM orders WHERE userId = :userId ORDER BY date DESC")
+    suspend fun getUserOrdersDesc(userId: Long): List<OrderEntity>
 }

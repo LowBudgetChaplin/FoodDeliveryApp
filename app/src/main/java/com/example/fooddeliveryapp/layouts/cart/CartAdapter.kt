@@ -41,7 +41,7 @@ class CartAdapter(
         private val btnDelete: ImageButton = itemView.findViewById(R.id.btn_delete_item)
 
         fun bind(item: CartItemEntity) {
-            tvProductId.text = "Produs ID: ${item.productId}"
+            tvProductId.text = "Produs: ${item.productId}"
             tvQuantity.text = item.quantity.toString()
 
             btnIncrease.setOnClickListener {

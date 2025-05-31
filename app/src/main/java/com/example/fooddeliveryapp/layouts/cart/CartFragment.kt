@@ -63,7 +63,9 @@ class CartFragment : Fragment() {
 
         val placeOrderButton = view.findViewById<Button>(R.id.plasezacomandaBtn)
         placeOrderButton.setOnClickListener {
-            val userId = 1L
+            val prefs = requireContext().getSharedPreferences("user_session", android.content.Context.MODE_PRIVATE)
+            val userId = prefs.getLong("userId", -1)
+
             cartViewModel.placeOrder(
                 userId,
                 onSuccess = {
