@@ -8,5 +8,7 @@ data class RestaurantEntity(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val name: String,
     val category: String,
+    val address: String,
+    val description: String,
     val imageUrl: String
 )

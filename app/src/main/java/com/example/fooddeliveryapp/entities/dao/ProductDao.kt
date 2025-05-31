@@ -6,7 +6,7 @@ import com.example.fooddeliveryapp.entities.model.ProductEntity
 @Dao
 interface ProductDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(product: ProductEntity): Long
+    suspend fun insertProduct(product: ProductEntity): Long
 
     @Update
     suspend fun update(product: ProductEntity)

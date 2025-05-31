@@ -9,7 +9,7 @@ import com.example.fooddeliveryapp.entities.model.RestaurantEntity
 @Dao
 interface RestaurantDao {
     @Insert
-    suspend fun insertRestaurant(restaurant: RestaurantEntity)
+    suspend fun insertRestaurant(restaurant: RestaurantEntity): Long
 
     @Query("SELECT * FROM restaurants")
     suspend fun getAllRestaurants(): List<RestaurantEntity>

@@ -8,52 +8,56 @@ import com.example.fooddeliveryapp.MainActivity
 import com.example.fooddeliveryapp.R
 import com.example.fooddeliveryapp.entities.AppDatabase
 import com.example.fooddeliveryapp.entities.dao.RestaurantDao
-import com.example.fooddeliveryapp.entities.model.RestaurantEntity
-import com.example.fooddeliveryapp.layouts.RestaurantList.RestaurantsFragment
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 class AddRestaurantActivity : AppCompatActivity() {
 
     private lateinit var restaurantDao: RestaurantDao
+    private lateinit var nameEditText: EditText
+    private lateinit var categoryEditText: EditText
+    private lateinit var imageUrlEditText: EditText
+    private lateinit var btnAddRestaurant: Button
+    private lateinit var btnGoToMain: Button
+    private lateinit var addressEditText: EditText
+    private lateinit var descriptionEditText: EditText
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_restaurant)
 
         restaurantDao = AppDatabase.getInstance(this).restaurantDao()
-
-        val nameEditText = findViewById<EditText>(R.id.etRestaurantName)
-        val categoryEditText = findViewById<EditText>(R.id.etCategory)
-        val imageUrlEditText = findViewById<EditText>(R.id.etImageUrl)
-        val btnAddRestaurant = findViewById<Button>(R.id.btnAddRestaurant)
-        val btnGoToMain = findViewById<Button>(R.id.btnGoToMain)
+        nameEditText = findViewById(R.id.etRestaurantName)
+        categoryEditText = findViewById(R.id.etCategory)
+        imageUrlEditText = findViewById(R.id.etImageUrl)
+        btnAddRestaurant = findViewById(R.id.btnAddRestaurant)
+        btnGoToMain = findViewById(R.id.btnGoToMain)
+        addressEditText = findViewById(R.id.etRestaurantAddress)
+        descriptionEditText = findViewById(R.id.etRestaurantDescription)
 
         btnAddRestaurant.setOnClickListener {
             val name = nameEditText.text.toString().trim()
             val category = categoryEditText.text.toString().trim()
             val imageUrl = imageUrlEditText.text.toString().trim()
+            val address = addressEditText.text.toString().trim()
+            val description = descriptionEditText.text.toString().trim()
 
             if (name.isEmpty() || category.isEmpty()) {
                 Toast.makeText(this, "Completeaza toate campurile obligatorii", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            CoroutineScope(Dispatchers.IO).launch {
-                val restaurant = RestaurantEntity(name = name, category = category, imageUrl = imageUrl)
-                restaurantDao.insertRestaurant(restaurant)
-                runOnUiThread {
-                    Toast.makeText(this@AddRestaurantActivity, "Restaurant adaugat cu succes", Toast.LENGTH_SHORT).show()
-                    nameEditText.text.clear()
-                    categoryEditText.text.clear()
-                    imageUrlEditText.text.clear()
-                }
-            }
+            val intent = Intent(this, AddProductActivity::class.java)
+            intent.putExtra("restaurantName", name)
+            intent.putExtra("restaurantCategory", category)
+            intent.putExtra("restaurantImageUrl", imageUrl)
+            intent.putExtra("restaurantAddress", address)
+            intent.putExtra("restaurantDescription", description)
+            startActivity(intent)
+            finish()
         }
 
         btnGoToMain.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
+            startActivity(Intent(this, MainActivity::class.java))
             startActivity(intent)
             finish()
         }

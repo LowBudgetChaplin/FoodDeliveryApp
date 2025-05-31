@@ -28,7 +28,7 @@ import com.example.fooddeliveryapp.entities.model.UserEntity
         OrderItemEntity::class,
         DeliveryLocationEntity::class
     ],
-    version = 3,
+    version = 5,
     exportSchema = false
 )
 @TypeConverters(Converters::class)
