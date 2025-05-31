@@ -43,6 +43,8 @@
         <activity android:name=".layouts.ProductListActivity" />
         <activity android:name=".layouts.CurrentOrderActivity" />
         <activity android:name=".MainActivity" />
+        <activity android:name=".MainActivity" />
+        <activity android:name=".layouts.cart.CartActivity" />
         <activity android:name=".layouts.OrderHistoryActivity" />
         <activity android:name=".layouts.base.RegisterActivity" />
         <activity android:name=".layouts.RestaurantList.AddRestaurantActivity" />
