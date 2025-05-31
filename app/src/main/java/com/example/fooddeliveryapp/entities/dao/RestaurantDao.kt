@@ -8,9 +8,9 @@ import com.example.fooddeliveryapp.entities.model.RestaurantEntity
 
 @Dao
 interface RestaurantDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(vararg items: RestaurantEntity)
+    @Insert
+    suspend fun insertRestaurant(restaurant: RestaurantEntity)
 
     @Query("SELECT * FROM restaurants")
-    suspend fun getAll(): List<RestaurantEntity>
+    suspend fun getAllRestaurants(): List<RestaurantEntity>
 }
