@@ -17,7 +17,7 @@ class FoodDeliveryApp : Application() {
         database = Room.databaseBuilder(
             applicationContext,
             AppDatabase::class.java,
-            "food_delivery.db"
+            "food_delivery1.db"
         )
             .fallbackToDestructiveMigration()
             .build()

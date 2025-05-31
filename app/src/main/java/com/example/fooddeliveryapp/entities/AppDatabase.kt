@@ -9,22 +9,26 @@ import com.example.fooddeliveryapp.entities.dao.*
 import com.example.fooddeliveryapp.utils.Converters
 import com.example.fooddeliveryapp.entities.model.*
 
+
+
 @Database(
     entities = [
         UserEntity::class,
+        RestaurantEntity::class,
         ProductEntity::class,
         CartItemEntity::class,
         OrderEntity::class,
         OrderItemEntity::class,
         DeliveryLocationEntity::class
     ],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun userDao(): UserDao
+    abstract fun restaurantDao(): RestaurantDao
     abstract fun productDao(): ProductDao
     abstract fun cartDao(): CartDao
     abstract fun orderDao(): OrderDao
