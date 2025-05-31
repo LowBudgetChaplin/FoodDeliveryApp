@@ -6,8 +6,15 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.example.fooddeliveryapp.entities.dao.*
+import com.example.fooddeliveryapp.entities.model.CartItemEntity
+import com.example.fooddeliveryapp.entities.model.DeliveryLocationEntity
+import com.example.fooddeliveryapp.entities.model.OrderEntity
+import com.example.fooddeliveryapp.entities.model.OrderItemEntity
+import com.example.fooddeliveryapp.entities.model.ProductEntity
 import com.example.fooddeliveryapp.utils.Converters
-import com.example.fooddeliveryapp.entities.model.*
+import com.example.fooddeliveryapp.entities.model.RestaurantEntity
+import com.example.fooddeliveryapp.entities.model.UserEntity
+
 
 
 
@@ -21,7 +28,7 @@ import com.example.fooddeliveryapp.entities.model.*
         OrderItemEntity::class,
         DeliveryLocationEntity::class
     ],
-    version = 2,
+    version = 3,
     exportSchema = false
 )
 @TypeConverters(Converters::class)

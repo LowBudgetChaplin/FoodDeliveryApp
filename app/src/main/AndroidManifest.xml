@@ -20,7 +20,7 @@
         android:theme="@style/Theme.FoodDeliveryApp"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".layouts.base.LoginActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.FoodDeliveryApp">
@@ -30,9 +30,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".layouts.ProductListActivity" />
-
         <activity android:name=".layouts.CurrentOrderActivity" />
+        <activity android:name=".MainActivity" />
         <activity android:name=".layouts.OrderHistoryActivity" />
+        <activity android:name=".layouts.base.RegisterActivity" />
+        <activity android:name=".layouts.RestaurantList.AddRestaurantActivity" />
 
         <meta-data
             android:name="osmdroid.config.storage_folder"

@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
         val db = AppDatabase.getInstance(this)
         lifecycleScope.launch {
             val list = withContext(Dispatchers.IO) {
-                db.restaurantDao().getAll()
+                db.restaurantDao().getAllRestaurants()
             }
             adapter.submitList(list)
 

@@ -1,4 +1,4 @@
-package com.example.fooddeliveryapp.layouts
+package com.example.fooddeliveryapp.layouts.RestaurantList
 
 import android.os.Bundle
 import android.view.View
@@ -32,11 +32,11 @@ class RestaurantsFragment : Fragment(R.layout.fragment_restaurant)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
 
-        // Inițializezi restaurantDao (singleton Room database)
+        // Inițializezi restaurantDao
         restaurantDao = AppDatabase.getInstance(requireContext()).restaurantDao()
 
         lifecycleScope.launch {
-            val restaurants = restaurantDao.getAll()
+            val restaurants = restaurantDao.getAllRestaurants()
             adapter.submitList(restaurants)
         }
     }
