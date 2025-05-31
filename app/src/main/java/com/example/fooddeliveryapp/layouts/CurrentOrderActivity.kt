@@ -85,7 +85,7 @@ class CurrentOrderActivity : AppCompatActivity() {
                     if (currentLatitude != null && currentLongitude != null) {
                         searchRestaurantAndShowDistance(restaurantNameInput)
                     } else {
-                        Toast.makeText(this, "Nu am putut obține locația reala", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "Nu am putut obtine locatia reala", Toast.LENGTH_SHORT).show()
                     }
                 }
             } else {
@@ -162,7 +162,6 @@ class CurrentOrderActivity : AppCompatActivity() {
 
         lifecycleScope.launch(Dispatchers.IO) {
             try {
-                // Include orasul implicit pentru rezultate mai precise
                 val query = "$restaurantName, Bucuresti"
                 val nominatimResults: List<NominatimSearchResult> =
                     NominatimRetrofitClient.apiService.searchPlace(query)

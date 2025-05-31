@@ -18,7 +18,6 @@ interface CartDao {
     @Query("SELECT * FROM cart_items")
     fun getAll(): Flow<List<CartItemEntity>>
 
-    /** Metoda nouă pentru a returna odată lista completă (non-Flow) */
     @Query("SELECT * FROM cart_items")
     suspend fun getAllOnce(): List<CartItemEntity>
 

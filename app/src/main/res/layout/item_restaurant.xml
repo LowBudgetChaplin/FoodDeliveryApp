@@ -43,7 +43,6 @@
         app:layout_constraintEnd_toEndOf="@id/tvName"
         android:layout_marginTop="4dp" />
 
-    <!-- Separator -->
     <View
         android:id="@+id/separator"
         android:layout_width="0dp"

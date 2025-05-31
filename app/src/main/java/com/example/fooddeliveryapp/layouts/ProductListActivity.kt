@@ -48,7 +48,7 @@ class ProductListActivity : AppCompatActivity() {
 
         adapter = ProductAdapter { product ->
             cartViewModel.addToCart(product.id)
-            Toast.makeText(this, "Adăugat în coș: ${product.name}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Adaugat in cos: ${product.name}", Toast.LENGTH_SHORT).show()
         }
 
         recyclerView.adapter = adapter

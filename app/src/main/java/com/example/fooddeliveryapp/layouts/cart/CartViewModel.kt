@@ -38,10 +38,6 @@ class CartViewModel(private val cartRepository: CartRepository) : ViewModel() {
         }
     }
 
-    /**
-     * Plasează comanda: citește tot ce e în coș, creează Order + OrderItems,
-     * golește coșul la final. Afișează un Toast de confirmare (prin callback).
-     */
     fun placeOrder(
         userId: Long,
         onSuccess: () -> Unit,
@@ -49,15 +45,12 @@ class CartViewModel(private val cartRepository: CartRepository) : ViewModel() {
     ) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                // 1. Preia toate elementele din coș
                 val itemsInCart = cartRepository.getAllCartItemsOnce()
 
                 if (itemsInCart.isEmpty()) {
-                    // Dacă coșul e gol, aruncăm o excepție custom
-                    throw IllegalStateException("Coșul este gol")
+                    throw IllegalStateException("Cosul este gol")
                 }
 
-                // 2. Creează un nou OrderEntity
                 val newOrder = OrderEntity(
                     userId = userId,
                     date = Date(),
@@ -65,7 +58,6 @@ class CartViewModel(private val cartRepository: CartRepository) : ViewModel() {
                 )
                 val orderId = cartRepository.insertOrder(newOrder)
 
-                // 3. Pentru fiecare CartItemEntity, ia produsul ca să afli prețul
                 for (cartItem in itemsInCart) {
                     val product = cartRepository.getProductById(cartItem.productId)
                     if (product != null) {
@@ -79,10 +71,8 @@ class CartViewModel(private val cartRepository: CartRepository) : ViewModel() {
                     }
                 }
 
-                // 4. Golește coșul
                 cartRepository.clearCart()
 
-                // 5. Rulează callback-ul onSuccess pe thread-ul principal
                 launch(Dispatchers.Main) {
                     onSuccess()
                 }

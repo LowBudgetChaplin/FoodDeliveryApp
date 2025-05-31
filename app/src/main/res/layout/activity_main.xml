@@ -66,7 +66,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginStart="6dp"
-            android:text="Coș\nactual"
+            android:text="Cos\nactual"
             android:padding="5dp"
             android:drawableTop="@drawable/ic_cart"
             android:drawablePadding="5dp"/>

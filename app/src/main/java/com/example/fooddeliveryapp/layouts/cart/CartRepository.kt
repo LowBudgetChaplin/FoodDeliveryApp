@@ -37,24 +37,18 @@ class CartRepository(
         cartDao.clearCart()
     }
 
-    // ---------- Metode pentru placeOrder ----------
-
-    /** Returnează o listă simplă (non-Flow) cu elementele din coș, odată. */
     suspend fun getAllCartItemsOnce(): List<CartItemEntity> {
-        return cartDao.getAllOnce() // vezi DAO modificat mai jos
+        return cartDao.getAllOnce()
     }
 
-    /** Inserează Order și returnează orderId-ul */
     suspend fun insertOrder(order: OrderEntity): Long {
         return orderDao.insert(order)
     }
 
-    /** Inserează un OrderItem */
     suspend fun insertOrderItem(orderItem: OrderItemEntity): Long {
         return orderItemDao.insert(orderItem)
     }
 
-    /** Returnează ProductEntity după ID */
     suspend fun getProductById(id: Long): ProductEntity? {
         return productDao.getById(id)
     }

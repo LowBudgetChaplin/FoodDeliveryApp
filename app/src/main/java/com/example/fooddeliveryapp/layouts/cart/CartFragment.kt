@@ -25,7 +25,6 @@ class CartFragment : Fragment() {
     private lateinit var adapter: CartAdapter
 
     private val cartViewModel: CartViewModel by viewModels {
-        // Inițializăm CartRepository cu toate DAO-urile necesare
         val db = AppDatabase.getInstance(requireContext())
         val repository = CartRepository(
             db.cartDao(),
@@ -56,22 +55,19 @@ class CartFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
 
-        // Observăm Flow-ul de elemente din coș
         lifecycleScope.launchWhenStarted {
             cartViewModel.cartItems.collectLatest { items ->
                 adapter.submitList(items)
             }
         }
 
-        // Butonul „Plasează Comanda”
         val placeOrderButton = view.findViewById<Button>(R.id.plasezacomandaBtn)
         placeOrderButton.setOnClickListener {
-            // Să zicem că avem userId fix (de exemplu 1L).
             val userId = 1L
             cartViewModel.placeOrder(
                 userId,
                 onSuccess = {
-                    Toast.makeText(requireContext(), "Comanda a fost plasată!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Comanda a fost plasata!", Toast.LENGTH_SHORT).show()
                 },
                 onFailure = { error ->
                     Toast.makeText(requireContext(), "Eroare la plasarea comenzii: ${error.message}", Toast.LENGTH_LONG).show()

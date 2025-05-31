@@ -33,7 +33,6 @@ class ProductAdapter(
                 .error(android.R.drawable.ic_menu_report_image)
                 .into(binding.ivProductImage)
 
-            // Click pe butonul Adaugă în coș
             binding.btnAddToCart.setOnClickListener {
                 onAddToCartClick(product)
             }
