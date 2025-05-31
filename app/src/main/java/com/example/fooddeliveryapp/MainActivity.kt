@@ -11,6 +11,7 @@ import com.example.fooddeliveryapp.databinding.ActivityMainBinding
 import com.example.fooddeliveryapp.entities.AppDatabase
 import com.example.fooddeliveryapp.layouts.CurrentOrderActivity
 import com.example.fooddeliveryapp.layouts.OrderHistoryActivity
+import com.example.fooddeliveryapp.layouts.ProductListActivity
 import com.example.fooddeliveryapp.utils.RestaurantAdapter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -27,18 +28,31 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        adapter = RestaurantAdapter { product ->
-            Log.d("MainActivity", "Clicked restaurant: ${product.name}")
+        adapter = RestaurantAdapter { restaurant ->
+            try {
+                Log.d("MainActivity", "Clicked restaurant: ${restaurant.name}")
+
+                val intent = Intent(this, ProductListActivity::class.java)
+                intent.putExtra("restaurant_id", restaurant.id)
+                startActivity(intent)
+            } catch (e: Exception) {
+                Log.e("MainActivity", "Error starting ProductListActivity", e)
+            }
         }
+
+
+
         binding.rvRestaurants.layoutManager = LinearLayoutManager(this)
         binding.rvRestaurants.adapter = adapter
+
 
         val db = AppDatabase.getInstance(this)
         lifecycleScope.launch {
             val list = withContext(Dispatchers.IO) {
-                db.productDao().getAll()
+                db.restaurantDao().getAll()
             }
             adapter.submitList(list)
+
             Log.d("MainActivity", "Loaded ${list.size} restaurants")
         }
 
@@ -60,4 +74,5 @@ class MainActivity : AppCompatActivity() {
         }
         binding.btnCurrentCart.setOnClickListener {}
     }
+
 }
