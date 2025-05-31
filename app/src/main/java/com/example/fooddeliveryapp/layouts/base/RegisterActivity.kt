@@ -70,11 +70,11 @@ class RegisterActivity : AppCompatActivity() {
                         val prefs = getSharedPreferences("user_session", Context.MODE_PRIVATE)
                         prefs.edit()
                             .putLong("userId", user.id)
-                            .putString("role", user.role)
+                            .putString("role", user.role.lowercase())
                             .apply()
 
                         runOnUiThread {
-                            if (role == "client") {
+                            if (role == "Client") {
                                 startActivity(Intent(this@RegisterActivity, MainActivity::class.java))
                             } else {
                                 startActivity(Intent(this@RegisterActivity, AddRestaurantActivity::class.java))

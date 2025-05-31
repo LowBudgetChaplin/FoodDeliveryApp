@@ -1,5 +1,6 @@
 package com.example.fooddeliveryapp
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -12,10 +13,12 @@ import com.example.fooddeliveryapp.entities.AppDatabase
 import com.example.fooddeliveryapp.layouts.CurrentOrderActivity
 import com.example.fooddeliveryapp.layouts.OrderHistoryActivity
 import com.example.fooddeliveryapp.layouts.ProductListActivity
+import com.example.fooddeliveryapp.layouts.base.LoginActivity
 import com.example.fooddeliveryapp.utils.RestaurantAdapter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import androidx.core.content.edit
 
 class MainActivity : AppCompatActivity() {
 
@@ -26,6 +29,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
+        binding.searchRestaurants.setIconifiedByDefault(false)
+        binding.searchRestaurants.isIconified = false
+        binding.searchRestaurants.clearFocus()
         setContentView(binding.root)
 
         adapter = RestaurantAdapter { restaurant ->
@@ -40,6 +46,16 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        binding.btnLogout.setOnClickListener {
+            getSharedPreferences("user_session", Context.MODE_PRIVATE)
+                .edit {
+                    clear()
+                }
+
+            startActivity(Intent(this, LoginActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            })
+        }
 
 
         binding.rvRestaurants.layoutManager = LinearLayoutManager(this)
